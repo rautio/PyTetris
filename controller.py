@@ -6,18 +6,12 @@
 	oskari.rautiainen@gmail.com
 """
 import pygame
+from shape import Shape
+from block import Block
+from constants import *;
 
 # Initialize game engine
 pygame.init()
-
-# Define Constants
-
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-BLUE = (0,0,255)
-GREEN = (0,255,0)
-RED =(255,0,0)
-PI = 3.141592653
 
 # Set height and width of screen
 size = [400,300]
@@ -40,12 +34,19 @@ while not done:
 	
 	# --- Game logic
 
+	# if round over create new shape
+	# else move shape down
+	# check for collisions
+
 	# --- Drawing code should go here
 
 	# First, clear the screen to white. Don't put other drawing commands
 	# above this, or they will be erased with this command.
 	screen.fill(WHITE)
 
+	# Testing draw_block function
+	#block1 = Block(GREEN,50,50)
+	#block1.draw_block(screen)
 	# --- Update screen
 	pygame.display.flip()
 
