@@ -1,6 +1,6 @@
 from constants import *;
 
-class Scoreboard(object):
+class ScoreBoard(object):
 	"""
 	A class to keep track of score and level.
 
@@ -19,3 +19,5 @@ class Scoreboard(object):
 		return self.score
 	def next_level(self):
 		self.lvl += 1
+	def print_scoreboard(self):
+		pygame.draw.aaline(SCREEN, BLACK, [WINDOW_WIDTH/2 + BORDER,BORDER], [WINDOW_WIDTH, BORDER], True)

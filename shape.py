@@ -1,4 +1,5 @@
 from constants import *;
+from block import Block
 
 class Shape(object):
 	"""
@@ -11,31 +12,52 @@ class Shape(object):
 		self.blocks = []
 		if(form == "I"):
 			# [][][][]
-			blocks.append(Block(color,x,y))
+			self.blocks.append(Block(CYAN,x,y))
+			self.blocks.append(Block(CYAN,x+1,y))
+			self.blocks.append(Block(CYAN,x+2,y))
+			self.blocks.append(Block(CYAN,x+3,y))
 		elif(form == "J"):
 			# [][][]
 			#     []
-			pass
+			self.blocks.append(Block(BLUE,x,y-1))
+			self.blocks.append(Block(BLUE,x+1,y-1))
+			self.blocks.append(Block(BLUE,x+2,y-1))
+			self.blocks.append(Block(BLUE,x+2,y))
 		elif(form == "L"):
 			# [][][]
 			# []
-			pass
+			self.blocks.append(Block(ORANGE,x,y))
+			self.blocks.append(Block(ORANGE,x,y-1))
+			self.blocks.append(Block(ORANGE,x+1,y-1))
+			self.blocks.append(Block(ORANGE,x+2,y-1))
 		elif(form == "O"):
 			# [][]
 			# [][]
-			pass
+			self.blocks.append(Block(YELLOW,x,y))
+			self.blocks.append(Block(YELLOW,x,y-1))
+			self.blocks.append(Block(YELLOW,x+1,y))
+			self.blocks.append(Block(YELLOW,x+1,y-1))
 		elif(form == "S"):
 			#   [][]
 			# [][]
-			pass
+			self.blocks.append(Block(LIME,x+1,y-1))
+			self.blocks.append(Block(LIME,x+2,y-1))
+			self.blocks.append(Block(LIME,x,y))
+			self.blocks.append(Block(LIME,x+1,y))
 		elif(form == "T"):
 			# [][][]
 			#   []
-			pass
+			self.blocks.append(Block(MAGENTA,x,y-1))
+			self.blocks.append(Block(MAGENTA,x+1,y-1))
+			self.blocks.append(Block(MAGENTA,x+1,y))
+			self.blocks.append(Block(MAGENTA,x+2,y-1))
 		elif(form == "Z"):
 			# [][]
 			#   [][]
-			pass
+			self.blocks.append(Block(RED,x,y-1))
+			self.blocks.append(Block(RED,x+1,y-1))
+			self.blocks.append(Block(RED,x+1,y))
+			self.blocks.append(Block(RED,x+2,y))
 	def move(self,direction):
 		if direction == "left":
 			self.x -= 1
@@ -43,9 +65,16 @@ class Shape(object):
 			self.x += 1
 		elif direction == "down":
 			self.y += 1
-		elif direction == "up":
-			# This should never really be used...
-			self.y -= 1
 		else:
 			return "Error: Not an appropriate direction"
+	def rotate(self,direction):
+		if direction == "left":
+			pass
+		elif direction == "right":
+			pass
+		else:
+			return "Error: Not an appropriate direction"
+	def draw_shape(self):
+		for i in self.blocks:
+			i.draw_block()
 		

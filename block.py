@@ -17,9 +17,10 @@ class Block(object):
 		self.y = y
 	def location(self):
 		return (self.x,self.y)
-	def draw_block(self,screen):
-		# Outline
-		pygame.draw.rect(screen,BLACK, [75, 10, 50, 20], 2)
-   		# Draw a solid rectangle
-		pygame.draw.rect(screen, self.color, [75, 10, 50, 20])
-      
+	def draw_block(self):
+		if(self.x >=0 and self.x <=9 and self.y >=0 and self.y <= 19):
+			# Outline
+			pygame.draw.rect(SCREEN,BLACK, [self.x * WIDTH_SPACER + 1 + BORDER, self.y * HEIGHT_SPACER + 1 + BORDER, WIDTH_SPACER-1, HEIGHT_SPACER-1], 1)
+	   		# Draw a solid rectangle
+			pygame.draw.rect(SCREEN, self.color, [self.x * WIDTH_SPACER + 2 + BORDER, self.y * HEIGHT_SPACER + 2 + BORDER, WIDTH_SPACER-3, HEIGHT_SPACER-3])
+	    
