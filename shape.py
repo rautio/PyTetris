@@ -59,12 +59,25 @@ class Shape(object):
 			self.blocks.append(Block(RED,x+1,y))
 			self.blocks.append(Block(RED,x+2,y))
 	def move(self,direction):
+		temp_blocks = self.blocks
 		if direction == "left":
-			self.x -= 1
+			for i in self.blocks:
+				if(i.location()[0]-1 < 0):
+					self.blocks = temp_blocks
+					break
+				i.move(i.location()[0]-1,i.location()[1])				
 		elif direction == "right":
-			self.x += 1
+			for i in reversed(self.blocks):
+				if(i.location()[0]+1 > 9):
+					self.blocks = temp_blocks
+					break
+				i.move(i.location()[0]+1,i.location()[1])
 		elif direction == "down":
-			self.y += 1
+			for i in reversed(self.blocks):
+				if(i.location()[1]+1 > 19):
+					self.blocks = temp_blocks
+					break
+				i.move(i.location()[0],i.location()[1]+1)
 		else:
 			return "Error: Not an appropriate direction"
 	def rotate(self,direction):
