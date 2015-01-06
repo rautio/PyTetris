@@ -58,6 +58,7 @@ class Shape(object):
 			self.blocks.append(Block(RED,x+1,y-1))
 			self.blocks.append(Block(RED,x+1,y))
 			self.blocks.append(Block(RED,x+2,y))
+
 	def move(self,direction):
 		temp_blocks = self.blocks
 		if direction == "left":
@@ -73,6 +74,12 @@ class Shape(object):
 					break
 				i.move(i.location()[0]+1,i.location()[1])
 		elif direction == "down":
+			for i in reversed(self.blocks):
+				if(i.location()[1]+1 > 19):
+					self.blocks = temp_blocks
+					break
+				i.move(i.location()[0],i.location()[1]+1)
+		elif direction == "rotate":
 			for i in reversed(self.blocks):
 				if(i.location()[1]+1 > 19):
 					self.blocks = temp_blocks

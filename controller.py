@@ -29,6 +29,20 @@ active_shape = Shape("J",4,2)
 while not done:
 	# --- Main event Loop
 
+	# Checking to see if a key is held down and then move piece
+	keys = pygame.key.get_pressed()
+	if keys[pygame.K_DOWN]:
+		active_shape.move("down")
+		active_shape.draw_shape()
+	if keys[pygame.K_RIGHT]:
+		active_shape.move("right")
+		active_shape.draw_shape()
+	if keys[pygame.K_LEFT]:
+		active_shape.move("left")
+		active_shape.draw_shape()
+	if keys[pygame.K_UP]:
+		active_shape.move("rotate")
+		active_shape.draw_shape()
 	for event in pygame.event.get(): # User did something
 		if event.type == pygame.QUIT:
 			done = True
@@ -36,13 +50,14 @@ while not done:
 			if event.key == pygame.K_LEFT:
 				active_shape.move("left")
 				active_shape.draw_shape()
-		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_RIGHT:
 				active_shape.move("right")
 				active_shape.draw_shape()
-		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_DOWN:
 				active_shape.move("down")
+				active_shape.draw_shape()
+			if event.key == pygame.K_UP:
+				active_shape.move("rotate")
 				active_shape.draw_shape()
 
 	# --- Game logic
@@ -87,6 +102,6 @@ while not done:
 
 	# --- Limit to 60 frames per second
 	clock.tick(60)
-	time.sleep(1)
+	time.sleep(0.2)
 # Close the window and quit
 pygame.quit()
