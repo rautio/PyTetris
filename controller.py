@@ -24,7 +24,13 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-active_shape = Shape("J",4,2)
+
+grid = Grid()
+grid.print_grid()
+sb = ScoreBoard()
+sb.print_scoreboard()
+active_shape = Shape()
+grid.add_shape(active_shape)
 # ---------- Main Program Loop ------------
 while not done:
 	# --- Main event Loop
@@ -72,36 +78,29 @@ while not done:
 	# above this, or they will be erased with this command.
 	SCREEN.fill(WHITE)
 
-	# Testing draw_block function
-	#block1 = Block(GREEN,50,50)
-	#block1.draw_block(screen)
-	grid1 = Grid()
-	grid1.print_grid()
-	sb = ScoreBoard()
-	sb.print_scoreboard()
-	block1 = Block(RED,2,2)
-	block2 = Block(RED,2,3)
-	block3 = Block(RED,3,3)
-	#block1.draw_block()
-	#block2.draw_block()
-	#block3.draw_block()
-	shapes = ["I","J","L","O","S","T","Z"]
-	# Print shapes to test
-	#for i in shapes:
-	#	shape1 = Shape(i,4, int(shapes.index(i))*2)
-	#	shape1.draw_shape()
-	#shape2 = Shape("I",4,2)
-	#dire = "right"
-	#for i in range (0,15):
-	#	shape2.move(dire)
-	#	shape2.draw_shape()
+	# Draw the outlines for the Tetris grid
+	pygame.draw.aaline(SCREEN, BLACK, [BORDER, WINDOW_HEIGHT - BORDER], [BORDER, BORDER], True)
+	pygame.draw.aaline(SCREEN, BLACK, [WINDOW_WIDTH/2, BORDER], [BORDER,BORDER], True)
+	for i in range(1,11):
+		pygame.draw.aaline(SCREEN, BLACK, [WIDTH_SPACER * i + BORDER, WINDOW_HEIGHT-BORDER], [WIDTH_SPACER * i + BORDER, BORDER], True)
+	for i in range(1,21):
+		pygame.draw.aaline(SCREEN, BLACK, [WINDOW_WIDTH/2, HEIGHT_SPACER*i + BORDER], [BORDER, HEIGHT_SPACER*i + BORDER], True)
+	
 	active_shape.draw_shape()
 	active_shape.move("down")
+	sb.print_scoreboard()
+	grid.print_grid()
+
 	# --- Update screen
 	pygame.display.flip()
 
 	# --- Limit to 60 frames per second
 	clock.tick(60)
 	time.sleep(0.2)
+#	for i in active_shape.get_blocks():
+#		if i.get_location()[1] >= 19:
+#			active_shape = Shape("K",4,0)
+#			grid.add_shape(active_shape)
+
 # Close the window and quit
 pygame.quit()

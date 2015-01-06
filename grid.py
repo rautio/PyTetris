@@ -8,30 +8,40 @@ class Grid(object):
 	Oskari Rautiainen
 	oskari.rautiainen@gmail.com
 	"""
-	active_shape = None
-	grid =[]
+	grid = []
+	new = []
 
 	def __init__(self):
+
+		# Initialize the grid as a 20 x 10 2d list
+		# "O" denotes an empty spot, "X" denotes an occupied spot
 		for i in range (0,20):
-			self.grid.append("O" * 10)
+			new = []
+			for j in range (0,10):
+				new.append("O")
+			self.grid.append(new)
+				
 	def add_shape(self, shape):
-		active_shape = shape
-	def update(self,direction):
-		if direction == "down":
+		"""Add a shape to the grid"""
+		for i in shape.get_blocks():
+			if not self.collide(shape):
+				self.grid[i.get_location()[0]][i.get_location()[1]] = "X"
+
+	def collide(self,shape,direction = ""):
+		""" Return if shape will collide if moved one step toward direction """
+		if direction == "":
+			for i in shape.get_blocks():
+				if i.get_location()[0] < 0 or i.get_location()[0] > 9 or i.get_location()[1] < -1 or i.get_location()[1] > 19 or self.grid[i.get_location()[0]][i.get_location()[1]] == "X":
+					return True
+		elif direction == "right":
 			pass
 		elif direction == "left":
 			pass
 		elif direction == "right":
 			pass
-		else:
-			return "Error: Inappropraite direction"
+		return False
 	def print_grid(self):
-		# For testing purposes only
-		#for i in self.grid:
-		#	print " ".join(i)
-		pygame.draw.aaline(SCREEN, BLACK, [BORDER, WINDOW_HEIGHT - BORDER], [BORDER, BORDER], True)
-		pygame.draw.aaline(SCREEN, BLACK, [WINDOW_WIDTH/2, BORDER], [BORDER,BORDER], True)
-		for i in range(1,11):
-			pygame.draw.aaline(SCREEN, BLACK, [WIDTH_SPACER * i + BORDER, WINDOW_HEIGHT-BORDER], [WIDTH_SPACER * i + BORDER, BORDER], True)
-		for i in range(1,21):
-			pygame.draw.aaline(SCREEN, BLACK, [WINDOW_WIDTH/2, HEIGHT_SPACER*i + BORDER], [BORDER, HEIGHT_SPACER*i + BORDER], True)
+		"""Print the grid in an easy to understand format with the "O" and "X" of each spot. This function is only used for debugging"""
+		for i in self.grid:
+			print " ".join(i)
+		
