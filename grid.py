@@ -21,8 +21,7 @@ class Grid(object):
 			for j in range (0,20):
 				new.append("O")
 			self.grid.append(new)
-		newshape = Shape()
-		self.active_shape = newshape
+		self.active_shape = Shape()
 		self.update_grid()
 				
 	def add_shape(self, shape):
@@ -61,6 +60,15 @@ class Grid(object):
 		elif direction == "down":
 			if not self.collide(self.active_shape,direction):
 				self.active_shape.move(direction)
+			else:
+				# At top - Game Over
+
+				# At bottom - new shape
+				print "At bottom"
+				time.sleep(0.1)
+				self.add_shape(self.active_shape)
+				self.active_shape = Shape()
+				self.update_grid()
 		elif direction == "rotate":
 			print "Trying to rotate"
 		else:
