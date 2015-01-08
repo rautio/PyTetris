@@ -5,7 +5,6 @@
 	Oskari Rautiainen
 	oskari.rautiainen@gmail.com
 """
-import time
 from shape import Shape
 from block import Block
 from grid import Grid
@@ -65,6 +64,10 @@ while not done:
 			if event.key == pygame.K_UP:
 				grid.move_shape("rotate")
 				grid.draw_shape()
+			if event.key == pygame.K_SPACE:
+				while not grid.collide("down"):
+					grid.move_shape("down")
+				grid.draw_shapes()
 
 	# --- Game logic
 

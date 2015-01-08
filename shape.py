@@ -11,7 +11,7 @@ class Shape(object):
 	"""
 	def __init__ (self):
 		index = randint(0,6)
-		form = SHAPES[index]
+		form = SHAPES[3]
 		x = 3
 		y = 0
 		self.blocks = []
@@ -157,10 +157,14 @@ class Shape(object):
 				if not new_block in result: 
 					result.append(new_block)
 		else:
-			return "Error: Not a valid direction in get_outer_blocks"
-		for i in result:
-			print "result",i.get_location()[0],i.get_location()[1]
+			return "Error: Not a valid direction in shape - get_outer_blocks()"
 		return result
+	def remove_block(self,block):
+		"""Remove the given block from the shape"""
+		if block in self.blocks:
+			self.blocks.remove(block)
+		else:
+			print "Did not remove block"
 	def draw_shape(self):
 		"""Draw the shape"""
 		for i in self.blocks:
