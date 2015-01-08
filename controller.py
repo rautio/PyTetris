@@ -26,11 +26,11 @@ clock = pygame.time.Clock()
 
 
 grid = Grid()
-grid.print_grid()
+#grid.print_grid()
 sb = ScoreBoard()
 sb.print_scoreboard()
 active_shape = Shape()
-grid.add_shape(active_shape)
+#grid.add_shape(active_shape)
 # ---------- Main Program Loop ------------
 while not done:
 	# --- Main event Loop
@@ -41,8 +41,8 @@ while not done:
 		active_shape.move("down")
 		active_shape.draw_shape()
 	if keys[pygame.K_RIGHT]:
-		active_shape.move("right")
-		active_shape.draw_shape()
+		grid.move_shape("right")
+		grid.draw_shapes()
 	if keys[pygame.K_LEFT]:
 		active_shape.move("left")
 		active_shape.draw_shape()
@@ -86,11 +86,12 @@ while not done:
 	for i in range(1,21):
 		pygame.draw.aaline(SCREEN, BLACK, [WINDOW_WIDTH/2, HEIGHT_SPACER*i + BORDER], [BORDER, HEIGHT_SPACER*i + BORDER], True)
 	
-	active_shape.draw_shape()
-	active_shape.move("down")
+	#active_shape.draw_shape()
+	#active_shape.move("down")
 	sb.print_scoreboard()
-	grid.print_grid()
-
+	#grid.print_grid()
+	grid.draw_shapes()
+	grid.move_shape("down")
 	# --- Update screen
 	pygame.display.flip()
 

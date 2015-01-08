@@ -19,6 +19,24 @@ class Block(object):
 	def get_location(self):
 		"""Return a list (x,y) of the coordinates of the block"""
 		return (self.x,self.y)
+	def get_color(self):
+		"""Return color of the block"""
+		return self.color
+	def out_of_bounds(self,direction = ""):
+		"""Return True if the block will be out bounds if moved one step towards direciton, else False if would still be in bounds """
+		if direction == "":
+			if(self.get_location()[0] < 0 or self.get_location()[0] > 9 or self.get_location()[1] < 0 or self.get_location()[1] > 19):
+				return True
+		if direction == "left":
+			if(self.get_location()[0]-1 < 0 or self.get_location()[0] > 9 or self.get_location()[1] < -1 or self.get_location()[1] > 19):
+				return True
+		if direction == "right":
+			if(self.get_location()[0] < 0 or self.get_location()[0]+1 > 9 or self.get_location()[1] < -1 or self.get_location()[1] > 19):
+				return True
+		if direction == "down":
+			if(self.get_location()[0] < 0 or self.get_location()[0] > 9 or self.get_location()[1] < -1 or self.get_location()[1]+1 > 19):
+				return True
+		return False
 	def draw_block(self):
 		"""Draw the block only if it is within bounds of the 20 x 10 grid"""
 		if(self.x >=0 and self.x <=9 and self.y >=0 and self.y <= 19):

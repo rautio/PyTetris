@@ -12,7 +12,7 @@ class Shape(object):
 	def __init__ (self):
 		index = randint(0,6)
 		form = SHAPES[index]
-		x = 4
+		x = 3
 		y = 0
 		self.blocks = []
 		if(form == "I"):
@@ -63,12 +63,25 @@ class Shape(object):
 			self.blocks.append(Block(RED,x+1,y-1))
 			self.blocks.append(Block(RED,x+1,y))
 			self.blocks.append(Block(RED,x+2,y))
-	def out_of_bounds(self,direction):
-		"""Return if the shape will be out of bounds if moved one step towards direciton """
-		for i in self.blocks:
-			if(i.get_location()[0]-1 < 0 or i.get_location()[0]+1 < 9 or i.get_location()[1] + 1 > 19):
-				return false
-		return true
+	def out_of_bounds(self,direction = ""):
+		"""Return True if the shape will be out bounds if moved one step towards direciton, else False if would still be in bounds """
+		if direction == "":
+			for i in self.blocks:
+				if i.out_of_bounds():
+					return True
+		if direction == "left":
+			for i in self.blocks:
+				if i.out_of_bounds("left"):
+					return True
+		elif direction == "right":
+			for i in self.blocks:
+				if i.out_of_bounds("right"):
+					return True
+		elif direction == "down":
+			for i in self.blocks:
+				if i.out_of_bounds("down"):
+					return True
+		return False
 
 	def move(self,direction):
 		"""Move the shape one step toward direction"""
@@ -110,6 +123,29 @@ class Shape(object):
 	def get_blocks(self):
 		"""Return a list of all blocks in the shape"""
 		return self.blocks
+	def get_outer_blocks(self,direction):
+		"""Return a list of all the blocks with sides not adjacent to other blocks in the direction given"""
+		result = []
+		if direction == "right":
+			pass
+		elif direction == "left":
+			pass
+		elif direction == "down":
+			for i in self.blocks:
+				new_block = i
+				for j in self.blocks:
+					# Check to see if there is another block with the same x value that is below the current one,
+					# if so set that as the outer block. 
+					if j.get_location()[0] == new_block.get_location()[0] and j.get_location()[1] > new_block.get_location()[1]:
+						new_block = j
+				# Eliminate duplicates
+				if not new_block in result: 
+					result.append(new_block)
+		else:
+			return "Error: Not a valid direction in get_outer_blocks"
+		for i in result:
+			print "result",i.get_location()[0],i.get_location()[1]
+		return result
 	def draw_shape(self):
 		"""Draw the shape"""
 		for i in self.blocks:
