@@ -126,10 +126,26 @@ class Shape(object):
 	def get_outer_blocks(self,direction):
 		"""Return a list of all the blocks with sides not adjacent to other blocks in the direction given"""
 		result = []
-		if direction == "right":
-			pass
-		elif direction == "left":
-			pass
+		if direction == "left":
+			for i in self.blocks:
+				new_block = i
+				for j in self.blocks:
+					# Check to see if there is another block with the same y value that is to the left of the current one,
+					# if so set that as the outer block. 
+					if j.get_location()[1] == new_block.get_location()[1] and j.get_location()[0] < new_block.get_location()[0]:
+						new_block = j
+				if not new_block in result: 
+					result.append(new_block)
+		elif direction == "right":
+			for i in self.blocks:
+				new_block = i
+				for j in self.blocks:
+					# Check to see if there is another block with the same y value that is to the right of the current one,
+					# if so set that as the outer block. 
+					if j.get_location()[1] == new_block.get_location()[1] and j.get_location()[0] > new_block.get_location()[0]:
+						new_block = j
+				if not new_block in result: 
+					result.append(new_block)
 		elif direction == "down":
 			for i in self.blocks:
 				new_block = i
@@ -138,7 +154,6 @@ class Shape(object):
 					# if so set that as the outer block. 
 					if j.get_location()[0] == new_block.get_location()[0] and j.get_location()[1] > new_block.get_location()[1]:
 						new_block = j
-				# Eliminate duplicates
 				if not new_block in result: 
 					result.append(new_block)
 		else:

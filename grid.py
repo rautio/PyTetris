@@ -61,12 +61,11 @@ class Grid(object):
 		elif direction == "down":
 			if not self.collide(self.active_shape,direction):
 				self.active_shape.move(direction)
-				self.update_grid()
-				self.print_grid()
 		elif direction == "rotate":
-			pass
+			print "Trying to rotate"
 		else:
-			pass
+			return "Error: Invalid direction in grid - move_shape()"
+		self.update_grid()
 
 	def collide(self,shape,direction = ""):
 		#TODO: Need to change shape to self.active_shape
@@ -75,18 +74,20 @@ class Grid(object):
 			for i in shape.get_blocks():
 				if i.get_location()[0] < 0 or i.get_location()[0] > 9 or i.get_location()[1] < -1 or i.get_location()[1] > 19 or self.grid[i.get_location()[0]][i.get_location()[1]] == "X":
 					return True
-		elif direction == "right":
-			for i, blocks in enumerate(shape.get_blocks()):
-				if i != len(shape.get_blocks())-1 and blocks[i+1].get_location()[0] == blocks[i].get_location()[0]+1:
-					pass
-				elif i.get_location()[0] > 9 or self.grid[i.get_location()[0]+1][i.get_location()[1]] == "X":
-					return True
 		elif direction == "left":
-			pass
+			for i in shape.get_outer_blocks(direction):
+				if shape.out_of_bounds(direction) or self.grid[i.get_location()[0]-1][i.get_location()[1]] == "X":
+					return True
+		elif direction == "right":
+			for i in shape.get_outer_blocks(direction):
+				if shape.out_of_bounds(direction) or self.grid[i.get_location()[0]+1][i.get_location()[1]] == "X":
+					return True
 		elif direction == "down":
 			for i in shape.get_outer_blocks(direction):
 				if shape.out_of_bounds(direction) or self.grid[i.get_location()[0]][i.get_location()[1]+1] == "X":
 					return True
+		elif direction == "rotate":
+			pass
 		return False
 	def draw_shapes(self):
 		for i in self.shapes:

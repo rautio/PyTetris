@@ -37,34 +37,34 @@ while not done:
 
 	# Checking to see if a key is held down and then move piece
 	keys = pygame.key.get_pressed()
-	if keys[pygame.K_DOWN]:
-		active_shape.move("down")
-		active_shape.draw_shape()
+	if keys[pygame.K_LEFT]:
+		grid.move_shape("left")
+		grid.draw_shapes()
 	if keys[pygame.K_RIGHT]:
 		grid.move_shape("right")
 		grid.draw_shapes()
-	if keys[pygame.K_LEFT]:
-		active_shape.move("left")
-		active_shape.draw_shape()
+	if keys[pygame.K_DOWN]:
+		grid.move_shape("down")
+		grid.draw_shapes()
 	if keys[pygame.K_UP]:
-		active_shape.move("rotate")
-		active_shape.draw_shape()
+		grid.move_shape("rotate")
+		grid.draw_shapes()
 	for event in pygame.event.get(): # User did something
 		if event.type == pygame.QUIT:
 			done = True
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
-				active_shape.move("left")
-				active_shape.draw_shape()
+				grid.move_shape("left")
+				grid.draw_shapes()
 			if event.key == pygame.K_RIGHT:
-				active_shape.move("right")
-				active_shape.draw_shape()
+				grid.move_shape("right")
+				grid.draw_shapes()
 			if event.key == pygame.K_DOWN:
-				active_shape.move("down")
-				active_shape.draw_shape()
+				grid.move_shape("down")
+				grid.draw_shapes()
 			if event.key == pygame.K_UP:
-				active_shape.move("rotate")
-				active_shape.draw_shape()
+				grid.move_shape("rotate")
+				grid.draw_shape()
 
 	# --- Game logic
 
