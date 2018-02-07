@@ -63,7 +63,7 @@ while not done:
 				grid.draw_shapes()
 			if event.key == pygame.K_UP:
 				grid.move_shape("rotate")
-				grid.draw_shape()
+				grid.draw_shapes()
 			if event.key == pygame.K_SPACE:
 				while not grid.collide("down"):
 					grid.move_shape("down")
@@ -105,6 +105,8 @@ while not done:
 #		if i.get_location()[1] >= 19:
 #			active_shape = Shape("K",4,0)
 #			grid.add_shape(active_shape)
-
+	# Check if game is over
+	if grid.game_over():
+		done = True
 # Close the window and quit
 pygame.quit()

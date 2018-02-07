@@ -9,6 +9,7 @@ class Grid(object):
 	Oskari Rautiainen
 	oskari.rautiainen@gmail.com
 	"""
+	done = False
 	grid = []			 # Internal representation of the grid
 	shapes = []	         # List of shapes that are already settled
 	active_shape = None  # Current shape being moved
@@ -77,6 +78,16 @@ class Grid(object):
 				block.move(block.get_location()[0],block.get_location()[1]+1)
 		self.update_grid()
 
+	def is_game_over(self):
+		""" If the starting position is occupied then the game is over"""
+		if self.grid[START_X][START_Y] == 'X':
+			self.done = True
+			return True
+		return False
+
+	def game_over(self):
+		return self.done
+
 	def move_shape(self,direction):
 		"""Main function used to move or rotate a shape in the grid"""
 		if direction == "right":
@@ -89,17 +100,19 @@ class Grid(object):
 			if not self.collide(direction):
 				self.active_shape.move(direction)
 			else:
-				# At top - Game Over
-
-				# At bottom - new shape
-				self.add_shape(self.active_shape)
-				self.active_shape = Shape()
-				#time.sleep(0.1)
-				self.check_grid()
-				self.update_grid()
+				# At the bottom, now draw new shape unless its game over
+	
+				if not self.is_game_over():
+					# At bottom - new shape
+					self.add_shape(self.active_shape)
+					self.active_shape = Shape()
+					#time.sleep(0.1)
+					self.check_grid()
+					self.update_grid()
 
 		elif direction == "rotate":
-			print("Trying to rotate")
+			if not self.collide(direction):
+				self.active_shape.move(direction)
 		else:
 			return "Error: Invalid direction in grid - move_shape()"
 		self.update_grid()
@@ -123,8 +136,12 @@ class Grid(object):
 				if self.active_shape.out_of_bounds(direction) or self.grid[i.get_location()[0]][i.get_location()[1]+1] == "X":
 					return True
 		elif direction == "rotate":
-			print("Trying to rotate")
-			pass
+			# The only condition where we will not rotate is if the new rotation collides with another shape
+			# If we go out of bounds the move method will slide the shape back in bounds
+			for i in self.active_shape.get_outer_blocks(direction):
+				if self.grid[i[0]][i[1]] == 'X':
+					return True
+			return False
 		return False
 	def draw_shapes(self):
 		for i in self.shapes:

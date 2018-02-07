@@ -11,9 +11,9 @@ class Shape(object):
 	"""
 	def __init__ (self):
 		index = randint(0,6)
-		form = SHAPES[3]
-		x = 3
-		y = 0
+		form = SHAPES[index]
+		x = START_X
+		y = START_Y
 		self.blocks = []
 		if(form == "I"):
 			# [][][][]
@@ -105,21 +105,29 @@ class Shape(object):
 					break
 				i.move(i.get_location()[0],i.get_location()[1]+1)
 		elif direction == "rotate":
+			x_ = None
+			y_ = None
 			for i in reversed(self.blocks):
-				if(i.get_location()[1]+1 > 19):
-					self.blocks = temp_blocks
-					break
-				i.move(i.get_location()[0],i.get_location()[1]+1)
+				if x_ == None:
+					x_ = i.get_location()[0]
+					y_ = i.get_location()[1]
+				new_x = i.get_location()[0]-x_
+				new_y = i.get_location()[1]-y_
+				i.move(x_+new_y, y_-new_x)
+			# Check to make sure we're not out of bounds
+			x_mod = 0
+			for i in reversed(self.blocks):
+				if i.get_location()[0] < 0:
+					if x_mod < 0-i.get_location()[0]:
+						x_mod = 0-i.get_location()[0]
+				if i.get_location()[0] > 9:
+					if x_mod > 9 - i.get_location()[0]:
+						x_mod = 9-i.get_location()[0]
+			for i in reversed(self.blocks):
+				i.move(i.get_location()[0]+x_mod, i.get_location()[1])
 		else:
 			return "Error: Not an appropriate direction"
-	def rotate(self,direction):
-		"""Rotate the shape"""
-		if direction == "left":
-			pass
-		elif direction == "right":
-			pass
-		else:
-			return "Error: Not an appropriate direction"
+
 	def get_blocks(self):
 		"""Return a list of all blocks in the shape"""
 		return self.blocks
@@ -156,6 +164,39 @@ class Shape(object):
 						new_block = j
 				if not new_block in result: 
 					result.append(new_block)
+		elif direction == "rotate":
+			# Essentially what we want are blocks in the rotate block that aren't in the current one
+			x_ = None
+			y_ = None
+			original = []
+			rotated = []
+			for i in self.blocks:
+				original.append(i.get_location())
+			for i in self.blocks:
+				if x_ == None:
+					x_ = i.get_location()[0]
+					y_ = i.get_location()[1]
+				new_x = i.get_location()[0]-x_
+				new_y = i.get_location()[1]-y_
+				rotated.append([x_+new_y, y_-new_x])
+			x_mod = 0
+			for r in rotated:
+				if r[0] < 0:
+					if x_mod < 0 - r[0]:
+						x_mod = 0 - r[0]
+				if r[0] > 9:
+					if x_mod > 9 - r[0]:
+						x_mod = 9 - r[0]
+			final_rotated = []
+			for r in rotated:
+				final_rotated.append([r[0]+x_mod,r[1]])
+			for r in final_rotated:
+				match = False
+				for o in original:
+					if o[0] == r[0] and o[1] == r[1]:
+						match = True
+				if not match:
+					result.append(r)
 		else:
 			return "Error: Not a valid direction in shape - get_outer_blocks()"
 		return result

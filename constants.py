@@ -25,3 +25,5 @@ HEIGHT_SPACER = (WINDOW_HEIGHT - 2*BORDER)/20
 # Set width and height of screen
 SIZE = [WINDOW_WIDTH+BORDER,WINDOW_HEIGHT+BORDER]
 SCREEN = pygame.display.set_mode(SIZE)
+START_X=3
+START_Y=0
