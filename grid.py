@@ -60,7 +60,7 @@ class Grid(object):
 			if full_row == 10:
 				self.delete_row(i)
 				self.sb.add_score(10)
-				print "Score: ", self.sb.get_score()
+				print("Score:%f"%self.sb.get_score())
 				self.check_grid()
 
 	def delete_row(self,row):
@@ -99,7 +99,7 @@ class Grid(object):
 				self.update_grid()
 
 		elif direction == "rotate":
-			print "Trying to rotate"
+			print("Trying to rotate")
 		else:
 			return "Error: Invalid direction in grid - move_shape()"
 		self.update_grid()
@@ -123,7 +123,7 @@ class Grid(object):
 				if self.active_shape.out_of_bounds(direction) or self.grid[i.get_location()[0]][i.get_location()[1]+1] == "X":
 					return True
 		elif direction == "rotate":
-			print "Trying to rotate"
+			print("Trying to rotate")
 			pass
 		return False
 	def draw_shapes(self):
@@ -133,5 +133,5 @@ class Grid(object):
 	def print_grid(self):
 		"""Print the grid in an easy to understand format with the "O" and "X" of each spot. This function is only used for debugging"""
 		for i in self.grid:
-			print " ".join(i)
+			print(" ".join(i))
 		

@@ -164,7 +164,7 @@ class Shape(object):
 		if block in self.blocks:
 			self.blocks.remove(block)
 		else:
-			print "Did not remove block"
+			print("Did not remove block")
 	def draw_shape(self):
 		"""Draw the shape"""
 		for i in self.blocks:

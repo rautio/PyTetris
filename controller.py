@@ -15,7 +15,7 @@ from constants import *;
 # Initialize game engine
 pygame.init()
 
-pygame.display.set_caption("PyTetris - A very slimy Tetris")
+pygame.display.set_caption("PyTetris - An unpolished Tetris")
 
 # Loop until the user clicks the close button.
 done = False
